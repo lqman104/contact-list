@@ -1,3 +1,4 @@
+import 'package:contactlist/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../components/password_form_field.dart';
@@ -73,7 +74,9 @@ class LoginScreen extends StatelessWidget {
           ),
           FilledButton(
             child: const Text('Login'),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, MainScreen.id);
+            },
           ),
         ],
       ),

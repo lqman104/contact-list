@@ -1,10 +1,20 @@
 import 'package:contactlist/screens/login.dart';
+import 'package:contactlist/screens/main_screen.dart';
+import 'package:contactlist/screens/screen_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'contants/colors.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ScreenProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,14 +26,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: kColorPrimary, secondary: kColorPrimary),
-        buttonTheme: Theme.of(context).buttonTheme.copyWith(
-          buttonColor: kColorPrimary
-        ),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: kColorPrimary, secondary: kColorPrimary),
+        buttonTheme:
+            Theme.of(context).buttonTheme.copyWith(buttonColor: kColorPrimary),
         useMaterial3: true,
       ),
       initialRoute: LoginScreen.id,
-      routes: {LoginScreen.id: (context) => const LoginScreen()},
+      routes: {
+        LoginScreen.id: (context) => const LoginScreen(),
+        MainScreen.id: (context) => const MainScreen(),
+      },
     );
   }
 }
