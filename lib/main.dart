@@ -16,7 +16,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: kColorPrimary),
+        colorScheme: ColorScheme.fromSeed(seedColor: kColorPrimary, secondary: kColorPrimary),
+        buttonTheme: Theme.of(context).buttonTheme.copyWith(
+          buttonColor: kColorPrimary
+        ),
         useMaterial3: true,
       ),
       initialRoute: LoginScreen.id,
