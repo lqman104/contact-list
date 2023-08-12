@@ -1,7 +1,13 @@
+import 'package:contactlist/models/contact.dart';
 import 'package:flutter/material.dart';
 
 class UserTile extends StatelessWidget {
-  const UserTile({super.key});
+  final Contact contact;
+
+  const UserTile({
+    super.key,
+    required this.contact,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +23,7 @@ class UserTile extends StatelessWidget {
           child: CircleAvatar(
             radius: 30,
             foregroundImage: Image.network(
-              "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/484.jpg",
+              contact.avatar,
               errorBuilder: (context, object, stackTrace) {
                 return Container(
                   color: Colors.red,
@@ -36,12 +42,12 @@ class UserTile extends StatelessWidget {
             ).image,
           ),
         ),
-        title: const Text("Luqman Hakim"),
-        subtitle: const Column(
+        title: Text(contact.username),
+        subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("krisna nugroho"),
-            Text("lqman104@gmail.com"),
+            Text(contact.lastName),
+            Text(contact.email),
           ],
         ),
         trailing: IconButton(

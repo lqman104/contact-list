@@ -1,12 +1,12 @@
 import 'package:contactlist/screens/form.dart';
-import 'package:contactlist/screens/user_list.dart';
+import 'package:contactlist/screens/contact/contact_list.dart';
 import 'package:flutter/widgets.dart';
 
 class ScreenProvider extends ChangeNotifier {
   int selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    UserListScreen(),
+    ContactListScreen(),
     FormScreen()
   ];
 
