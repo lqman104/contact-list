@@ -1,3 +1,4 @@
+import 'package:contactlist/screens/form.dart';
 import 'package:contactlist/screens/user_list.dart';
 import 'package:flutter/widgets.dart';
 
@@ -6,12 +7,7 @@ class ScreenProvider extends ChangeNotifier {
 
   static const List<Widget> _widgetOptions = <Widget>[
     UserListScreen(),
-    Text(
-      'Index 1: Business',
-    ),
-    Text(
-      'Index 2: School',
-    ),
+    FormScreen()
   ];
 
   Widget getPage() {
@@ -22,7 +18,5 @@ class ScreenProvider extends ChangeNotifier {
     this.selectedIndex = selectedIndex;
     notifyListeners();
   }
-
-
 
 }
