@@ -25,4 +25,8 @@ class LoginRepository {
       return Failed(e.toString());
     }
   }
+
+  Future<bool> isLoggedIn() async {
+    return await _localSource.isLogin();
+  }
 }

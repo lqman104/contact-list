@@ -4,8 +4,8 @@ import 'package:connectivity_checker/connectivity_checker.dart';
 import 'package:contactlist/repository/login_local_source.dart';
 import 'package:contactlist/repository/login_remote_source.dart';
 import 'package:contactlist/repository/login_repository.dart';
-import 'package:contactlist/screens/login/login_screen.dart';
 import 'package:contactlist/screens/login/login_provider.dart';
+import 'package:contactlist/screens/login/login_screen.dart';
 import 'package:contactlist/screens/main_screen.dart';
 import 'package:contactlist/screens/screen_provider.dart';
 import 'package:dio/dio.dart';
@@ -25,28 +25,47 @@ Future<Map<String, dynamic>> parseJson(String text) {
   return compute(_parseAndDecode, text);
 }
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   dio.transformer = BackgroundTransformer()..jsonDecodeCallback = parseJson;
+  final loginRepository = LoginRepository(
+    LoginLocalSource(),
+    LoginRemoteSource(),
+  );
+  final bool isLoggedIn = await loginRepository.isLoggedIn();
+  late final String initialRoute;
+  try {
+    if (isLoggedIn) {
+      initialRoute = MainScreen.id;
+    } else {
+      initialRoute = LoginScreen.id;
+    }
+  } catch (e) {
+    if (kDebugMode) {
+      print(e);
+    }
+    initialRoute = LoginScreen.id;
+  }
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ScreenProvider()),
         ChangeNotifierProvider(
           create: (context) => LoginProvider(
-            LoginRepository(
-              LoginLocalSource(),
-              LoginRemoteSource(),
-            ),
+            loginRepository,
           ),
         ),
       ],
-      child: const MyApp(),
+      child: MyApp(initialRoute: initialRoute),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.initialRoute});
+
+  final String initialRoute;
 
   // This widget is the root of your application.
   @override
@@ -64,7 +83,7 @@ class MyApp extends StatelessWidget {
               .copyWith(buttonColor: kColorPrimary),
           useMaterial3: true,
         ),
-        initialRoute: LoginScreen.id,
+        initialRoute: initialRoute,
         routes: {
           LoginScreen.id: (context) => const LoginScreen(),
           MainScreen.id: (context) => const MainScreen(),

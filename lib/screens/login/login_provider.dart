@@ -25,5 +25,9 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> isLoggedIn() async {
+    return await _repository.isLoggedIn();
+  }
+
 
 }
