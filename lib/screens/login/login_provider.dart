@@ -5,6 +5,8 @@ import '../../repository/login_repository.dart';
 
 class LoginProvider extends ChangeNotifier {
 
+  bool isLoading = false;
+
   final LoginRepository _repository;
   LoginProvider(this._repository);
 
@@ -12,6 +14,16 @@ class LoginProvider extends ChangeNotifier {
     required String username,
     required String password,
   }) async {
-    return await _repository.login(username: username, password: password);
+    setIsLoading(true);
+    var response = await _repository.login(username: username, password: password);
+    setIsLoading(false);
+    return response;
   }
+
+  void setIsLoading(bool value) {
+    isLoading = value;
+    notifyListeners();
+  }
+
+
 }
