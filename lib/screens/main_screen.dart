@@ -4,6 +4,8 @@ import 'package:contactlist/screens/screen_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'login.dart';
+
 class MainScreen extends StatelessWidget {
   static const String id = "main_screen";
 
@@ -28,6 +30,11 @@ class MainScreen extends StatelessWidget {
         unselectedItemColor: kUnselectedMenu,
         backgroundColor: kColorPrimary,
         onTap: (index) {
+          if(index == 2) {
+            Navigator.pushReplacementNamed(context, LoginScreen.id);
+            return;
+          }
+
           context.read<ScreenProvider>().setSelectedIndex(index);
         },
       ),
