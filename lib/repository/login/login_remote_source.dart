@@ -2,8 +2,8 @@ import 'package:contactlist/network/network_exception.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-import '../models/user.dart';
-import '../network/network.dart';
+import '../../models/user.dart';
+import '../../network/network.dart';
 
 class LoginRemoteSource {
   Future<User> login({

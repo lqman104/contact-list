@@ -1,9 +1,9 @@
 import 'dart:convert' as convert;
 
 import 'package:connectivity_checker/connectivity_checker.dart';
-import 'package:contactlist/repository/login_local_source.dart';
-import 'package:contactlist/repository/login_remote_source.dart';
-import 'package:contactlist/repository/login_repository.dart';
+import 'package:contactlist/repository/login/login_local_source.dart';
+import 'package:contactlist/repository/login/login_remote_source.dart';
+import 'package:contactlist/repository/login/login_repository.dart';
 import 'package:contactlist/screens/login/login_provider.dart';
 import 'package:contactlist/screens/login/login_screen.dart';
 import 'package:contactlist/screens/main_screen.dart';

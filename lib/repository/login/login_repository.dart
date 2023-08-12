@@ -1,7 +1,7 @@
 import 'package:contactlist/models/data_response.dart';
-import 'package:contactlist/repository/login_local_source.dart';
+import 'package:contactlist/repository/login/login_local_source.dart';
 
-import '../models/user.dart';
+import '../../models/user.dart';
 import 'login_remote_source.dart';
 
 class LoginRepository {

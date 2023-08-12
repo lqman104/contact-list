@@ -1,7 +1,7 @@
 import 'package:contactlist/models/data_response.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../repository/login_repository.dart';
+import '../../repository/login/login_repository.dart';
 
 class LoginProvider extends ChangeNotifier {
   bool isLoading = false;
