@@ -13,31 +13,35 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kColorPrimary,
-        automaticallyImplyLeading: false,
-        title: const Text(
-          'BottomNavigationBar Sample',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body: context.watch<ScreenProvider>().getPage(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: Menus.getMenus(),
-        currentIndex: context.watch<ScreenProvider>().selectedIndex,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: kUnselectedMenu,
-        backgroundColor: kColorPrimary,
-        onTap: (index) {
-          if(index == 2) {
-            Navigator.pushReplacementNamed(context, LoginScreen.id);
-            return;
-          }
+    return Consumer<ScreenProvider>(
+      builder: (context, data, widget) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: kColorPrimary,
+            automaticallyImplyLeading: false,
+            title: Text(
+              data.getPageTitle(),
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+          body: data.getPage(),
+          bottomNavigationBar: BottomNavigationBar(
+            items: Menus.getMenus(),
+            currentIndex: data.selectedIndex,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: kUnselectedMenu,
+            backgroundColor: kColorPrimary,
+            onTap: (index) {
+              if (index == 2) {
+                Navigator.pushReplacementNamed(context, LoginScreen.id);
+                return;
+              }
 
-          context.read<ScreenProvider>().setSelectedIndex(index);
-        },
-      ),
+              data.setSelectedIndex(index);
+            },
+          ),
+        );
+      },
     );
   }
 }

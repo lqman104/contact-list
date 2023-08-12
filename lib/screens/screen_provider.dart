@@ -10,8 +10,17 @@ class ScreenProvider extends ChangeNotifier {
     FormScreen()
   ];
 
+  static const List<String> _pageTitle = <String>[
+    'List User',
+    'Create User'
+  ];
+
   Widget getPage() {
     return _widgetOptions[selectedIndex];
+  }
+
+  String getPageTitle() {
+    return _pageTitle[selectedIndex];
   }
 
   void setSelectedIndex(int selectedIndex) {
