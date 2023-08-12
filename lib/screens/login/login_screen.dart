@@ -15,6 +15,9 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String username = "";
+    String password = "";
+
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: ListView(
@@ -22,7 +25,7 @@ class LoginScreen extends StatelessWidget {
         children: [
           Padding(
             padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 64.0),
+            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 64.0),
             child: Image.asset(
               'images/tonjoo.png',
               width: 80,
@@ -43,6 +46,9 @@ class LoginScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextFormField(
+                  onChanged: (value) {
+                    username = value;
+                  },
                   decoration: Styles.getIconInputDecoration(
                     hint: 'Username',
                     iconData: Icons.person_outline,
@@ -53,9 +59,13 @@ class LoginScreen extends StatelessWidget {
                 height: 1,
                 color: Colors.grey.shade300,
               ),
-              const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: PasswordFormField(),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: PasswordFormField(
+                  onChange: (value) {
+                    password = value;
+                  },
+                ),
               )
             ],
           ),

@@ -2,8 +2,12 @@
 import 'package:flutter/material.dart';
 
 class PasswordFormField extends StatefulWidget {
+
+  final void Function(String value) onChange;
+
   const PasswordFormField({
     super.key,
+    required this.onChange
   });
 
   @override
@@ -28,6 +32,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: widget.onChange,
       obscureText: _hidePassword,
       decoration: InputDecoration(
           hintText: 'Password',
