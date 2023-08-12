@@ -20,9 +20,7 @@ class MainScreen extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Center(
-        child: context.watch<ScreenProvider>().getPage(),
-      ),
+      body: context.watch<ScreenProvider>().getPage(),
       bottomNavigationBar: BottomNavigationBar(
         items: Menus.getMenus(),
         currentIndex: context.watch<ScreenProvider>().selectedIndex,

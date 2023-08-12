@@ -1,12 +1,11 @@
+import 'package:contactlist/screens/user_list.dart';
 import 'package:flutter/widgets.dart';
 
 class ScreenProvider extends ChangeNotifier {
   int selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-    ),
+    UserListScreen(),
     Text(
       'Index 1: Business',
     ),
