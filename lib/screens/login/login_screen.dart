@@ -1,6 +1,9 @@
 import 'package:connectivity_checker/connectivity_checker.dart';
+import 'package:contactlist/models/data_response.dart';
+import 'package:contactlist/screens/login/login_provider.dart';
 import 'package:contactlist/screens/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/form_container.dart';
 import '../../components/password_form_field.dart';
@@ -12,6 +15,16 @@ class LoginScreen extends StatelessWidget {
   static const String id = "login_screen";
 
   const LoginScreen({super.key});
+
+  void showSnackbar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+    );
+
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +103,17 @@ class LoginScreen extends StatelessWidget {
             ),
             child: FilledButton(
               child: const Text('Login'),
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, MainScreen.id);
+              onPressed: () async {
+                DataResponse response = await context.read<LoginProvider>()
+                    .login(username: username, password: password);
+
+                if (!context.mounted) return;
+
+                if (response is Success) {
+                  Navigator.of(context).pushReplacementNamed(MainScreen.id);
+                } else if(response is Failed){
+                  showSnackbar(context, response.message);
+                }
               },
             ),
           ),

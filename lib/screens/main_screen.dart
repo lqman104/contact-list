@@ -4,7 +4,7 @@ import 'package:contactlist/screens/screen_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'login/login.dart';
+import 'login/login_screen.dart';
 
 class MainScreen extends StatelessWidget {
   static const String id = "main_screen";
