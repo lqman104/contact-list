@@ -3,8 +3,8 @@ import 'package:contactlist/models/data_response.dart';
 import 'package:contactlist/screens/login/login_provider.dart';
 import 'package:contactlist/screens/main_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/form_container.dart';
 import '../../components/password_form_field.dart';
@@ -41,7 +41,7 @@ class LoginScreen extends StatelessWidget {
           children: [
             Padding(
               padding:
-              const EdgeInsets.symmetric(horizontal: 16.0, vertical: 64.0),
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 64.0),
               child: Image.asset(
                 'images/tonjoo.png',
                 width: 80,
@@ -107,14 +107,15 @@ class LoginScreen extends StatelessWidget {
               child: FilledButton(
                 child: const Text('Login'),
                 onPressed: () async {
-                  DataResponse response = await context.read<LoginProvider>()
+                  DataResponse response = await context
+                      .read<LoginProvider>()
                       .login(username: username, password: password);
 
                   if (!context.mounted) return;
 
                   if (response is Success) {
                     Navigator.of(context).pushReplacementNamed(MainScreen.id);
-                  } else if(response is Failed){
+                  } else if (response is Failed) {
                     showSnackbar(context, response.message);
                   }
                 },
