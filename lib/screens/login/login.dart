@@ -2,11 +2,11 @@ import 'package:connectivity_checker/connectivity_checker.dart';
 import 'package:contactlist/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../components/form_container.dart';
-import '../components/password_form_field.dart';
-import '../contants/colors.dart';
-import '../contants/styles.dart';
-import '../contants/typhography.dart';
+import '../../components/form_container.dart';
+import '../../components/password_form_field.dart';
+import '../../contants/colors.dart';
+import '../../contants/styles.dart';
+import '../../contants/typhography.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String id = "login_screen";
