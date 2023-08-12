@@ -1,3 +1,4 @@
+import 'package:connectivity_checker/connectivity_checker.dart';
 import 'package:contactlist/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -58,11 +59,31 @@ class LoginScreen extends StatelessWidget {
               )
             ],
           ),
-          FilledButton(
-            child: const Text('Login'),
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, MainScreen.id);
-            },
+          ConnectivityWidgetWrapper(
+            stacked: false,
+            offlineWidget: const FilledButton(
+              onPressed: null,
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Login",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            child: FilledButton(
+              child: const Text('Login'),
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, MainScreen.id);
+              },
+            ),
           ),
         ],
       ),

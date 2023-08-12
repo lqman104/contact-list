@@ -1,3 +1,4 @@
+import 'package:connectivity_checker/connectivity_checker.dart';
 import 'package:contactlist/screens/login.dart';
 import 'package:contactlist/screens/main_screen.dart';
 import 'package:contactlist/screens/screen_provider.dart';
@@ -23,20 +24,25 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: kColorPrimary, secondary: kColorPrimary),
-        buttonTheme:
-            Theme.of(context).buttonTheme.copyWith(buttonColor: kColorPrimary),
-        useMaterial3: true,
+    return ConnectivityAppWrapper(
+      app: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: kColorPrimary,
+            secondary: kColorPrimary,
+          ),
+          buttonTheme: Theme.of(context)
+              .buttonTheme
+              .copyWith(buttonColor: kColorPrimary),
+          useMaterial3: true,
+        ),
+        initialRoute: LoginScreen.id,
+        routes: {
+          LoginScreen.id: (context) => const LoginScreen(),
+          MainScreen.id: (context) => const MainScreen(),
+        },
       ),
-      initialRoute: LoginScreen.id,
-      routes: {
-        LoginScreen.id: (context) => const LoginScreen(),
-        MainScreen.id: (context) => const MainScreen(),
-      },
     );
   }
 }
