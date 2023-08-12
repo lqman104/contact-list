@@ -1,8 +1,10 @@
 import 'package:contactlist/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../components/form_container.dart';
 import '../components/password_form_field.dart';
 import '../contants/colors.dart';
+import '../contants/styles.dart';
 import '../contants/typhography.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -35,47 +37,31 @@ class LoginScreen extends StatelessWidget {
             'Silahkan login gunakan username dan password',
             textAlign: TextAlign.center,
           ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24.0),
-              child: Container(
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15.0),
-                    ),
-                    color: Colors.white,
-                    boxShadow: [BoxShadow()]),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'Username',
-                          prefixIconColor: Colors.grey.shade300,
-                          border: InputBorder.none,
-                          prefixIcon: const Icon(Icons.person_outline),
-                        ),
-                      ),
-                    ),
-                    Divider(
-                      height: 1,
-                      color: Colors.grey.shade300,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: PasswordFormField(),
-                    )
-                  ],
+          FormContainer(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextFormField(
+                  decoration: Styles.getIconInputDecoration(
+                    hint: 'Username',
+                    iconData: Icons.person_outline,
+                  ),
                 ),
               ),
-            ),
+              Divider(
+                height: 1,
+                color: Colors.grey.shade300,
+              ),
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: PasswordFormField(),
+              )
+            ],
           ),
           FilledButton(
             child: const Text('Login'),
             onPressed: () {
-              Navigator.pushNamed(context, MainScreen.id);
+              Navigator.pushReplacementNamed(context, MainScreen.id);
             },
           ),
         ],
