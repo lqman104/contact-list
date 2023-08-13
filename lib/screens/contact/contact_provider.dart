@@ -10,6 +10,10 @@ class ContactProvider extends ChangeNotifier {
   bool isLoading = false;
   String? query;
   String photoPath = "";
+  String username = "";
+  String lastName = "";
+  String _gender = "male";
+  String email = "";
 
   ContactProvider(this._repository);
 
@@ -17,10 +21,25 @@ class ContactProvider extends ChangeNotifier {
     return await _repository.fetch(query);
   }
 
-  setPhotoPath(String path) {
+  void resetForm() {
+    photoPath = "";
+    username = "";
+    lastName = "";
+    _gender = "male";
+    email = "";
+  }
+
+  void setPhotoPath(String path) {
     photoPath = path;
     notifyListeners();
   }
+
+  void setGender(String gender) {
+    _gender = gender;
+    notifyListeners();
+  }
+
+  String get gender => _gender;
 
   void refresh() {
     notifyListeners();
@@ -31,12 +50,11 @@ class ContactProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<DataResponse> save({
-    required String username,
-    required String lastName,
-    required String gender,
-    required String email,
-  }) async {
+  Future<DataResponse> save() async {
+    if (photoPath.isEmpty) {
+      return Failed("Photo can't be empty");
+    }
+
     if (username.isEmpty) {
       return Failed("Username can't be empty");
     }
@@ -45,7 +63,7 @@ class ContactProvider extends ChangeNotifier {
       return Failed("Last name can't be empty");
     }
 
-    if (gender.isEmpty) {
+    if (_gender.isEmpty) {
       return Failed("Gender can't be empty");
     }
 
@@ -53,23 +71,23 @@ class ContactProvider extends ChangeNotifier {
       return Failed("Email can't be empty");
     }
 
-    if (photoPath.isEmpty) {
-      return Failed("Photo can't be empty");
+    if (!isValidEmail(email)) {
+      return Failed("Format email not valid");
     }
 
     const Uuid uuid = Uuid();
     Contact contact = Contact(
-        id: uuid.v1(),
-        username: username,
-        lastName: lastName,
-        email: email,
-        gender: gender,
-        avatar: photoPath,
+      id: uuid.v1(),
+      username: username,
+      lastName: lastName,
+      email: email,
+      gender: _gender,
+      avatar: photoPath,
     );
 
     _setIsLoading(true);
     var response = await _repository.store(contact);
-    photoPath = "";
+    resetForm();
     _setIsLoading(false);
     return response;
   }
@@ -84,5 +102,11 @@ class ContactProvider extends ChangeNotifier {
     var response = await _repository.delete(id);
     _setIsLoading(false);
     return response;
+  }
+
+  bool isValidEmail(String email) {
+    return RegExp(
+            "^[a-zA-Z0-9.!#\$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*\$")
+        .hasMatch(email);
   }
 }

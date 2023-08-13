@@ -16,10 +16,6 @@ class FormScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String username = "";
-    String lastName = "";
-    String gender = "male";
-    String email = "";
 
     ImageProvider? getAvatar(String path) {
       if(path.isNotEmpty) {
@@ -62,7 +58,7 @@ class FormScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: TextFormField(
                       onChanged: (value) {
-                        username = value;
+                        context.read<ContactProvider>().username = value;
                       },
                       decoration: Styles.getIconInputDecoration(
                         hint: 'Firstname',
@@ -78,7 +74,7 @@ class FormScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: TextFormField(
                       onChanged: (value) {
-                        lastName = value;
+                        context.read<ContactProvider>().lastName = value;
                       },
                       decoration: Styles.getIconInputDecoration(
                         hint: 'Lastname',
@@ -106,12 +102,12 @@ class FormScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: DropdownButton<String>(
-                            value: gender,
+                            value: context.watch<ContactProvider>().gender,
                             isExpanded: true,
                             icon: const Icon(Icons.arrow_drop_down),
                             elevation: 16,
                             onChanged: (String? value) {
-                              gender = value ?? "male";
+                              context.read<ContactProvider>().setGender(value ?? "male");
                             },
                             items: ['male', 'female']
                                 .map<DropdownMenuItem<String>>((String value) {
@@ -132,8 +128,9 @@ class FormScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
                       onChanged: (value) {
-                        email = value;
+                        context.read<ContactProvider>().email = value;
                       },
                       decoration: Styles.getIconInputDecoration(
                         hint: 'Email',
@@ -146,13 +143,8 @@ class FormScreen extends StatelessWidget {
               FilledButton(
                 child: const Text('Save'),
                 onPressed: () async {
-                  DataResponse response =
-                      await context.read<ContactProvider>().save(
-                            username: username,
-                            lastName: lastName,
-                            gender: gender,
-                            email: email,
-                          );
+                  DataResponse response = await context.read<ContactProvider>()
+                      .save();
 
                   if (!context.mounted) return;
 
