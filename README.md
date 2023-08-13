@@ -1,4 +1,4 @@
-# contactlist
+# contact
 
 A new Flutter project who can save email contact
 
@@ -6,10 +6,27 @@ A new Flutter project who can save email contact
 
 This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+### Screenshots:
+<div style="display: flex; width: 100%">
+  <img src="images/login.png" width="31%"/>
+  <img src="images/contact.png" width="31%"/>
+  <img src="images/form.png" width="31%"/>
+</div>
+  
+### Pages:
+- Login
+- Main menu
+- List contact
+- Add contact
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Tech stack:
+- Dio network
+- Provider state management
+- Material design 3
+- Sqflite database
+- Shared preference for session
+- ImagePicker to take a picture
+
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
