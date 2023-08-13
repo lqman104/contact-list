@@ -7,19 +7,22 @@ import '../../repository/contact/contact_repository.dart';
 
 class ContactProvider extends ChangeNotifier {
   bool isLoading = false;
+  String? query;
 
   final ContactRepository _repository;
 
   ContactProvider(this._repository);
 
   Future<DataResponse> fetch() async {
-    _setIsLoading(true);
-    var response = await _repository.fetch();
-    _setIsLoading(false);
-    return response;
+    return await _repository.fetch(query);
   }
 
   void refresh() {
+    notifyListeners();
+  }
+
+  void search(String query) {
+    this.query = query;
     notifyListeners();
   }
 
@@ -59,10 +62,6 @@ class ContactProvider extends ChangeNotifier {
     var response = await _repository.store(contact);
     _setIsLoading(false);
     return response;
-  }
-
-  Future<DataResponse> test() async {
-    return _repository.fetch();
   }
 
   void _setIsLoading(bool value) {

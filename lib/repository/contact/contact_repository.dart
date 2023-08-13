@@ -10,18 +10,18 @@ class ContactRepository {
 
   ContactRepository(this._localSource, this._remoteSource);
 
-  Future<DataResponse> fetch() async {
+  Future<DataResponse> fetch(String? query) async {
     try {
       final List<Contact> contacts;
-          bool isEmpty = await _localSource.count() == 0;
+      bool isEmpty = await _localSource.count() == 0;
 
-      if(isEmpty) {
+      if (isEmpty) {
         contacts = await _remoteSource.fetch();
         await _localSource.inserts(contacts);
 
         return Success(contacts);
       } else {
-        contacts = await _localSource.fetch();
+        contacts = await _localSource.fetch(query);
         return Success(contacts);
       }
     } catch (e) {

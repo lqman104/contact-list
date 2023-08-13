@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class SearchFormField extends StatelessWidget {
-  const SearchFormField({super.key});
+  final Function(String) onChange;
+  const SearchFormField({super.key, required this.onChange});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChange,
       decoration: InputDecoration(
           suffixIcon: const Icon(Icons.search),
           filled: true,

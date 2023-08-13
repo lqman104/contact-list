@@ -10,6 +10,22 @@ import '../../components/user_tile.dart';
 class ContactListScreen extends StatelessWidget {
   const ContactListScreen({super.key});
 
+  void showSnackbar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+    );
+
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  Widget noDataWidget() {
+    return const Center(
+      child: Text("No data"),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
@@ -18,12 +34,16 @@ class ContactListScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // search
-          const Padding(
-            padding: EdgeInsets.symmetric(
+          Padding(
+            padding: const EdgeInsets.symmetric(
               vertical: 8,
               horizontal: 16,
             ),
-            child: SearchFormField(),
+            child: SearchFormField(
+              onChange: (value) {
+                context.read<ContactProvider>().search(value);
+              },
+            ),
           ),
           const SizedBox(
             height: 12,
@@ -31,11 +51,16 @@ class ContactListScreen extends StatelessWidget {
           Expanded(
             child: FutureBuilder<DataResponse>(
               initialData: Success([]),
-              future: context.read<ContactProvider>().test(),
+              future: context.read<ContactProvider>().fetch(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data is Success) {
                     List<dynamic> contact = (snapshot.data as Success).data;
+
+                    if (contact.isEmpty) {
+                      return noDataWidget();
+                    }
+
                     return ListView.builder(
                       itemCount: contact.length,
                       itemBuilder: (context, index) {
@@ -54,9 +79,7 @@ class ContactListScreen extends StatelessWidget {
                     );
                   }
                 } else {
-                  return const Center(
-                    child: Text("No data"),
-                  );
+                  return noDataWidget();
                 }
               },
             ),

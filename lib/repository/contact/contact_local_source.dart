@@ -37,11 +37,19 @@ class ContactLocalSource {
     await batch.commit(noResult: true);
   }
 
-  Future<List<Contact>> fetch() async {
+  Future<List<Contact>> fetch(String? query) async {
     final db = MyDatabase.database;
 
-    final List<Map<String, dynamic>> maps =
-        await db.query(ContactEntity.tableName);
+    final List<Map<String, dynamic>> maps;
+    if (query == null || query.isEmpty) {
+      maps = await db.query(ContactEntity.tableName);
+    } else {
+      maps = await db.query(
+        ContactEntity.tableName,
+        where: '${ContactEntity.usernameField} LIKE ?',
+        whereArgs: ['%$query%'],
+      );
+    }
 
     List<ContactEntity> list = List.generate(maps.length, (i) {
       return ContactEntity(
