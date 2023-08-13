@@ -1,6 +1,7 @@
 import 'package:contactlist/models/data_response.dart';
-import 'package:contactlist/repository/user/user_repository.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../repository/contact/contact_repository.dart';
 
 class ContactProvider extends ChangeNotifier {
   bool isLoading = false;

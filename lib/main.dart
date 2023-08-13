@@ -1,10 +1,10 @@
 import 'package:connectivity_checker/connectivity_checker.dart';
+import 'package:contactlist/repository/contact/contact_local_source.dart';
+import 'package:contactlist/repository/contact/contact_remote_source.dart';
+import 'package:contactlist/repository/contact/contact_repository.dart';
 import 'package:contactlist/repository/login/login_local_source.dart';
 import 'package:contactlist/repository/login/login_remote_source.dart';
 import 'package:contactlist/repository/login/login_repository.dart';
-import 'package:contactlist/repository/user/user_local_source.dart';
-import 'package:contactlist/repository/user/user_remote_source.dart';
-import 'package:contactlist/repository/user/user_repository.dart';
 import 'package:contactlist/screens/contact/contact_provider.dart';
 import 'package:contactlist/screens/login/login_provider.dart';
 import 'package:contactlist/screens/login/login_screen.dart';
@@ -15,9 +15,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'contants/colors.dart';
+import 'database/database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final database = MyDatabase();
+  await database.init();
 
   final loginRepository = LoginRepository(
     LoginLocalSource(),
