@@ -23,7 +23,7 @@ class LoginLocalSource {
     return prefs?.getString(_token)?.isNotEmpty == true;
   }
 
-  Future<void> clear() async {
+  Future<void> logout() async {
     await _init();
     await prefs?.remove(_token);
   }

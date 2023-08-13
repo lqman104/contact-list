@@ -6,19 +6,10 @@ import 'package:provider/provider.dart';
 
 import '../../components/search_form_field.dart';
 import '../../components/user_tile.dart';
+import '../../util/ui_util.dart';
 
 class ContactListScreen extends StatelessWidget {
   const ContactListScreen({super.key});
-
-  void showSnackbar(BuildContext context, String message) {
-    final snackBar = SnackBar(
-      content: Text(message),
-    );
-
-    // Find the ScaffoldMessenger in the widget tree
-    // and use it to show a SnackBar.
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
 
   Widget noDataWidget() {
     return const Center(
@@ -81,7 +72,7 @@ class ContactListScreen extends StatelessWidget {
                                 if (response is Success) {
                                   context.read<ContactProvider>().refresh();
                                 } else if (response is Failed) {
-                                  showSnackbar(context, response.message);
+                                  showMySnackbar(context, response.message);
                                 }
                               }),
                         );

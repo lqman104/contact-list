@@ -1,6 +1,9 @@
 import 'package:contactlist/contants/colors.dart';
+import 'package:contactlist/models/data_response.dart';
 import 'package:contactlist/models/menus.dart';
+import 'package:contactlist/screens/login/login_provider.dart';
 import 'package:contactlist/screens/screen_provider.dart';
+import 'package:contactlist/util/ui_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,9 +34,18 @@ class MainScreen extends StatelessWidget {
             selectedItemColor: Colors.white,
             unselectedItemColor: kUnselectedMenu,
             backgroundColor: kColorPrimary,
-            onTap: (index) {
+            onTap: (index) async {
               if (index == 2) {
-                Navigator.pushReplacementNamed(context, LoginScreen.id);
+                DataResponse response = await context.read<LoginProvider>().logout();
+
+                if(!context.mounted) return;
+
+                if(response is Success) {
+                  Navigator.pushReplacementNamed(context, LoginScreen.id);
+                } else {
+                  showMySnackbar(context, "Failed to logout");
+                }
+
                 return;
               }
 

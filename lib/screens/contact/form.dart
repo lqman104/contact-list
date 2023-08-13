@@ -6,19 +6,10 @@ import 'package:provider/provider.dart';
 
 import '../../contants/styles.dart';
 import '../../models/data_response.dart';
+import '../../util/ui_util.dart';
 
 class FormScreen extends StatelessWidget {
   const FormScreen({super.key});
-
-  void showSnackbar(BuildContext context, String message) {
-    final snackBar = SnackBar(
-      content: Text(message),
-    );
-
-    // Find the ScaffoldMessenger in the widget tree
-    // and use it to show a SnackBar.
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +123,7 @@ class FormScreen extends StatelessWidget {
                     context.read<ContactProvider>().refresh();
                     context.read<ScreenProvider>().setSelectedIndex(0);
                   } else if (response is Failed) {
-                    showSnackbar(context, response.message);
+                    showMySnackbar(context, response.message);
                   }
                 },
               ),

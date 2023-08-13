@@ -11,21 +11,12 @@ import '../../components/password_form_field.dart';
 import '../../contants/colors.dart';
 import '../../contants/styles.dart';
 import '../../contants/typhography.dart';
+import '../../util/ui_util.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String id = "login_screen";
 
   const LoginScreen({super.key});
-
-  void showSnackbar(BuildContext context, String message) {
-    final snackBar = SnackBar(
-      content: Text(message),
-    );
-
-    // Find the ScaffoldMessenger in the widget tree
-    // and use it to show a SnackBar.
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +107,7 @@ class LoginScreen extends StatelessWidget {
                   if (response is Success) {
                     Navigator.of(context).pushReplacementNamed(MainScreen.id);
                   } else if (response is Failed) {
-                    showSnackbar(context, response.message);
+                    showMySnackbar(context, response.message);
                   }
                 },
               ),

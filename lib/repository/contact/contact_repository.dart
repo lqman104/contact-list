@@ -46,4 +46,13 @@ class ContactRepository {
       return Failed(e.toString());
     }
   }
+
+  Future<DataResponse> clear() async {
+    try {
+      await _localSource.clear();
+      return Success(null);
+    } catch (e) {
+      return Failed(e.toString());
+    }
+  }
 }

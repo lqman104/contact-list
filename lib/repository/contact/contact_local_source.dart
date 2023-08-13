@@ -84,4 +84,13 @@ class ContactLocalSource {
       whereArgs: [id],
     );
   }
+
+  Future<void> clear() async {
+    final db = MyDatabase.database;
+
+    // Remove the Dog from the database.
+    await db.delete(
+      ContactEntity.tableName,
+    );
+  }
 }

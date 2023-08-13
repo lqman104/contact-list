@@ -55,6 +55,7 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) => LoginProvider(
             loginRepository,
+            contactRepository
           ),
         ),
         ChangeNotifierProvider(

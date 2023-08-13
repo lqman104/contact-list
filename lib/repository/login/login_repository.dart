@@ -29,4 +29,13 @@ class LoginRepository {
   Future<bool> isLoggedIn() async {
     return await _localSource.isLogin();
   }
+
+  Future<DataResponse> logout() async {
+    try {
+      await _localSource.logout();
+      return Success(null);
+    } catch (e) {
+      return Failed(e.toString());
+    }
+  }
 }
