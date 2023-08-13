@@ -28,4 +28,13 @@ class ContactRepository {
       return Failed(e.toString());
     }
   }
+
+  Future<DataResponse> store(Contact contact) async {
+    try {
+      await _localSource.inserts([contact]);
+      return Success(null);
+    } catch (e) {
+      return Failed(e.toString());
+    }
+  }
 }

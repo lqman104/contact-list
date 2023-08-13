@@ -1,4 +1,4 @@
-import 'package:contactlist/screens/form.dart';
+import 'package:contactlist/screens/contact/form.dart';
 import 'package:contactlist/screens/contact/contact_list.dart';
 import 'package:flutter/widgets.dart';
 
