@@ -69,7 +69,21 @@ class ContactListScreen extends StatelessWidget {
                             vertical: 8,
                             horizontal: 16,
                           ),
-                          child: UserTile(contact: contact[index]),
+                          child: UserTile(
+                              contact: contact[index],
+                              onClickAction: () async {
+                                DataResponse response = await context
+                                    .read<ContactProvider>()
+                                    .delete(contact[index].id);
+
+                                if (!context.mounted) return;
+
+                                if (response is Success) {
+                                  context.read<ContactProvider>().refresh();
+                                } else if (response is Failed) {
+                                  showSnackbar(context, response.message);
+                                }
+                              }),
                         );
                       },
                     );

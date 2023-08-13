@@ -68,4 +68,11 @@ class ContactProvider extends ChangeNotifier {
     isLoading = value;
     notifyListeners();
   }
+
+  Future<DataResponse> delete(String id) async {
+    _setIsLoading(true);
+    var response = await _repository.delete(id);
+    _setIsLoading(false);
+    return response;
+  }
 }

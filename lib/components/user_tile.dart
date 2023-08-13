@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 class UserTile extends StatelessWidget {
   final Contact contact;
+  final Function() onClickAction;
 
   const UserTile({
     super.key,
     required this.contact,
+    required this.onClickAction,
   });
 
   @override
@@ -55,7 +57,7 @@ class UserTile extends StatelessWidget {
             Icons.close,
             color: Colors.red.shade300,
           ),
-          onPressed: () {},
+          onPressed: onClickAction,
         ),
       ),
     );

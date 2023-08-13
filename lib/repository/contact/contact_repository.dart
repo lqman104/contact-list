@@ -37,4 +37,13 @@ class ContactRepository {
       return Failed(e.toString());
     }
   }
+
+  Future<DataResponse> delete(String id) async {
+    try {
+      await _localSource.delete(id);
+      return Success(null);
+    } catch (e) {
+      return Failed(e.toString());
+    }
+  }
 }
