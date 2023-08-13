@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:contactlist/models/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +12,32 @@ class UserTile extends StatelessWidget {
     required this.contact,
     required this.onClickAction,
   });
+
+  ImageProvider getAvatar(String path) {
+    final bool isUrl = (path.contains("http://") ||path.contains("https://"));
+    if(isUrl) {
+      return Image.network(
+        contact.avatar,
+        errorBuilder: (context, object, stackTrace) {
+          return Container(
+            color: Colors.red,
+            child: null,
+          );
+        },
+        loadingBuilder: (context, widget, isLoading) {
+          if (isLoading == null) {
+            return widget;
+          }
+          return Container(
+            color: Colors.grey.shade700,
+            child: null,
+          );
+        },
+      ).image;
+    } else {
+      return Image.file(File(path)).image;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,24 +52,7 @@ class UserTile extends StatelessWidget {
           width: 50,
           child: CircleAvatar(
             radius: 30,
-            foregroundImage: Image.network(
-              contact.avatar,
-              errorBuilder: (context, object, stackTrace) {
-                return Container(
-                  color: Colors.red,
-                  child: null,
-                );
-              },
-              loadingBuilder: (context, widget, isLoading) {
-                if (isLoading == null) {
-                  return widget;
-                }
-                return Container(
-                  color: Colors.grey.shade700,
-                  child: null,
-                );
-              },
-            ).image,
+            foregroundImage: getAvatar(contact.avatar),
           ),
         ),
         title: Text(contact.username),

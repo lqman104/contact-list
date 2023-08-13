@@ -6,15 +6,20 @@ import '../../models/contact.dart';
 import '../../repository/contact/contact_repository.dart';
 
 class ContactProvider extends ChangeNotifier {
+  final ContactRepository _repository;
   bool isLoading = false;
   String? query;
-
-  final ContactRepository _repository;
+  String photoPath = "";
 
   ContactProvider(this._repository);
 
   Future<DataResponse> fetch() async {
     return await _repository.fetch(query);
+  }
+
+  setPhotoPath(String path) {
+    photoPath = path;
+    notifyListeners();
   }
 
   void refresh() {
@@ -48,6 +53,10 @@ class ContactProvider extends ChangeNotifier {
       return Failed("Email can't be empty");
     }
 
+    if (photoPath.isEmpty) {
+      return Failed("Photo can't be empty");
+    }
+
     const Uuid uuid = Uuid();
     Contact contact = Contact(
         id: uuid.v1(),
@@ -55,11 +64,12 @@ class ContactProvider extends ChangeNotifier {
         lastName: lastName,
         email: email,
         gender: gender,
-        avatar: "",
+        avatar: photoPath,
     );
 
     _setIsLoading(true);
     var response = await _repository.store(contact);
+    photoPath = "";
     _setIsLoading(false);
     return response;
   }
